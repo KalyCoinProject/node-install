@@ -1,0 +1,22 @@
+[Unit]
+Description=KalyChain RPC Node Service
+After=network.target
+StartLimitBurst=5
+StartLimitIntervalSec=200
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=30
+User=%USER%
+Group=%USER%
+LimitNOFILE=65536
+WorkingDirectory=/home/%USER%/node/
+ExecStart=/home/%USER%/besu/bin/besu --config-file=/home/%USER%/node-install/configs/rpc/config.toml
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=kaly-rpc
+Environment=LOG4J_CONFIGURATION_FILE=/home/%USER%/node-install/configs/rpc/log-config.xml
+
+[Install]
+WantedBy=multi-user.target
